@@ -20,9 +20,9 @@ def main():
     cur = conn.cursor()
     
     cur.execute("SELECT DISTINCT camid FROM UMAPTable")
-    camid_options = [row[0] for row in cur.fetchall()]
+    camid_options = sorted([row[0] for row in cur.fetchall()])
     cur.execute("SELECT DISTINCT pid FROM UMAPTable")
-    pid_options = [row[0] for row in cur.fetchall()]
+    pid_options = sorted([row[0] for row in cur.fetchall()])
     
     # User input for camids and pids
     camids = st.multiselect('Choose camids', camid_options)
