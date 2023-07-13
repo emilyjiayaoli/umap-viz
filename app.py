@@ -24,8 +24,8 @@ def main():
     pid_options = sorted([int(row[0]) for row in cur.fetchall()])  # Convert pids to integers for sorting
     
     # User input for camids and pids
-    camids = st.multiselect('Choose camids', camid_options)
     pids = st.multiselect('Choose pids', pid_options)
+    camids = st.multiselect('Choose camids', camid_options)
 
     selection_query = 'SELECT * FROM UMAPTable'
     
@@ -45,6 +45,16 @@ def main():
     # Create 3D scatter plot
     fig = px.scatter_3d(df, x='x', y='y', z='z', color='pid', opacity=1, color_continuous_scale='RdBu', title="Embeddings")
     fig.update_layout(width=800, height=600)
+
+    # Define the limits of your axes
+    x_range = [-15, 20]  # Change these values to your preferred limits
+    y_range = [-15, 20]
+    z_range = [-15, 20]
+
+    # Fix the axes
+    fig.update_xaxes(range=x_range)
+    fig.update_yaxes(range=y_range)
+    fig.update_scenes(xaxis=dict(range=z_range))  # For 3D scatter plots, use update_scenes instead of update_zaxes
 
     st.plotly_chart(fig)
 
