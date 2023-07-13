@@ -21,7 +21,7 @@ def main():
     cur.execute("SELECT DISTINCT camid FROM UMAPTable")
     camid_options = sorted([row[0] for row in cur.fetchall()])
     cur.execute("SELECT DISTINCT pid FROM UMAPTable")
-    pid_options = sorted([row[0] for row in cur.fetchall()])
+    pid_options = sorted([int(row[0]) for row in cur.fetchall()])  # Convert pids to integers for sorting
     
     # User input for camids and pids
     camids = st.multiselect('Choose camids', camid_options)
@@ -36,6 +36,9 @@ def main():
     if pids:
         pids_str = ','.join(["'" + str(e) + "'" for e in pids])  # Treat pids as strings
         selection_query += (' AND' if 'WHERE' in selection_query else ' WHERE') + f' pid IN ({pids_str})'
+
+    # Sort the data by 'pid' in the SQL query
+    selection_query += ' ORDER BY pid'
     
     df = load_data(conn, selection_query)
 
