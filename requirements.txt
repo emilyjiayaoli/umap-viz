@@ -1,0 +1,14 @@
+# pip install -r requirements.txt
+
+matplotlib
+opencv-python
+numpy
+Pillow
+pydantic
+PyYAML
+scipy
+streamlit
+streamlit-folium
+black
+ffmpeg-python
+psycopg2
