@@ -31,7 +31,7 @@ def main():
     selection_query = 'SELECT * FROM UMAPTable'
     
     if camids:
-        camids_str = ','.join([str(e) for e in camids])
+        camids_str = ','.join(["'" + str(e) + "'" for e in camids])  # Treat camids as strings
         selection_query += f' WHERE camid IN ({camids_str})'
     
     if pids:
