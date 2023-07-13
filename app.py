@@ -7,8 +7,7 @@ import pandas as pd
 def get_connection():
     return psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='hackathon' port='5434'")
 
-def load_data(selection_query):
-    conn = get_connection()
+def load_data(conn, selection_query):
     df = pd.read_sql(selection_query, conn)
     return df
 
@@ -38,7 +37,7 @@ def main():
         pids_str = ','.join(["'" + str(e) + "'" for e in pids])  # Treat pids as strings
         selection_query += (' AND' if 'WHERE' in selection_query else ' WHERE') + f' pid IN ({pids_str})'
     
-    df = load_data(selection_query)
+    df = load_data(conn, selection_query)
 
     # Create 3D scatter plot
     fig = px.scatter_3d(df, x='x', y='y', z='z', color='pid', opacity=1, color_continuous_scale='RdBu', title="Embeddings")
