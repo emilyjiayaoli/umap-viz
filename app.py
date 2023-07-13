@@ -3,9 +3,9 @@ import plotly.express as px
 import psycopg2
 import pandas as pd
 
-@st.cache_resource(hash_funcs={psycopg2.extensions.connection: id})
+@st.cache_resource
 def get_connection():
-    return psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='hackathon' port='5434'")
+    return psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='hackathon' port='5435'")
 
 def load_data(conn, selection_query):
     df = pd.read_sql(selection_query, conn)
@@ -14,7 +14,6 @@ def load_data(conn, selection_query):
 # Streamlit app
 def main():
     st.title("3D Embeddings Visualization")
-
     conn = get_connection()
     cur = conn.cursor()
     
@@ -42,6 +41,7 @@ def main():
     # Create 3D scatter plot
     fig = px.scatter_3d(df, x='x', y='y', z='z', color='pid', opacity=1, color_continuous_scale='RdBu', title="Embeddings")
     fig.update_layout(width=800, height=600)
+    fig.update_traces(marker=dict(size=8))
 
     st.plotly_chart(fig)
 
