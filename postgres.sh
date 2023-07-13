@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "build" ]; then
-  docker run -d --name hackathondb -p 127.0.0.1:5434:5432 -e POSTGRES_PASSWORD=hackathon timescale/timescaledb-ha:pg15-latest
+  docker run -d --name umapviz -p 127.0.0.1:5435:5432 -e POSTGRES_PASSWORD=hackathon timescale/timescaledb-ha:pg15-latest
 elif [ "$1" == "configure" ]; then
     psql postgresql://postgres:hackathon@localhost:5434 -f initialize_tables.sql
 elif [ "$1" == "start" ]; then
