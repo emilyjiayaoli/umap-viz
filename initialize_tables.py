@@ -3,7 +3,7 @@ import psycopg2
 import streamlit as st
 
 
-@st.cache_resource 
+# @st.cache_resource 
 def get_connection():
     return psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='hackathon' port='5434'")
 
